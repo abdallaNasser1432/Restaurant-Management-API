@@ -59,8 +59,26 @@ const getRestaurantByIdentifier = async (identifier) => {
   return restaurant;
 };
 
+const getNearbyRestaurants = async ({ lng, lat }) => {
+  const longitude = Number(lng);
+  const latitude = Number(lat);
+
+  return Restaurant.find({
+    location: {
+      $near: {
+        $geometry: {
+          type: 'Point',
+          coordinates: [longitude, latitude],
+        },
+        $maxDistance: 1000, // 1KM in meters
+      },
+    },
+  });
+};
+
 module.exports = {
   createRestaurant,
   getRestaurants,
   getRestaurantByIdentifier,
+  getNearbyRestaurants,
 };

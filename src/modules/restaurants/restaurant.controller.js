@@ -37,8 +37,20 @@ const getRestaurantByIdentifier = asyncHandler(async (req, res) => {
   );
 });
 
+const getNearbyRestaurants = asyncHandler(async (req, res) => {
+  const restaurants = await restaurantService.getNearbyRestaurants(req.query);
+
+  return sendSuccess(
+    res,
+    200,
+    'Nearby restaurants fetched successfully',
+    restaurants
+  );
+});
+
 module.exports = {
   createRestaurant,
   getRestaurants,
   getRestaurantByIdentifier,
+  getNearbyRestaurants,
 };

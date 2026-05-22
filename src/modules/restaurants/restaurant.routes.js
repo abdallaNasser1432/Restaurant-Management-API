@@ -5,6 +5,7 @@ const {
   createRestaurantValidation,
   getRestaurantsValidation,
   getRestaurantByIdentifierValidation,
+  getNearbyRestaurantsValidation,
 } = require('./restaurant.validation');
 
 const router = express.Router();
@@ -21,6 +22,13 @@ router.get(
   getRestaurantsValidation,
   validateRequest,
   restaurantController.getRestaurants
+);
+
+router.get(
+  '/nearby',
+  getNearbyRestaurantsValidation,
+  validateRequest,
+  restaurantController.getNearbyRestaurants
 );
 
 router.get(
