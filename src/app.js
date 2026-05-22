@@ -2,6 +2,7 @@ const express = require('express');
 const notFound = require('./middlewares/notFound.middleware');
 const errorHandler = require('./middlewares/error.middleware');
 
+const restaurantRoutes = require('./modules/restaurants/restaurant.routes');
 
 const app = express();
 
@@ -14,6 +15,8 @@ app.get('/', (req, res) => {
   });
 });
 
+// API Routes
+app.use('/api/restaurants', restaurantRoutes);
 
 
 app.use(notFound);
