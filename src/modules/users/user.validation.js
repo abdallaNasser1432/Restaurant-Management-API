@@ -1,4 +1,4 @@
-const { body } = require('express-validator');
+const { body,param } = require('express-validator');
 
 const createUserValidation = [
   body('fullName')
@@ -18,6 +18,16 @@ const createUserValidation = [
     .trim(),
 ];
 
+const getUserByIdentifierValidation = [
+  param('identifier')
+    .notEmpty()
+    .withMessage('User identifier is required')
+    .isString()
+    .withMessage('User identifier must be a string')
+    .trim(),
+];
+
 module.exports = {
   createUserValidation,
+  getUserByIdentifierValidation,
 };
