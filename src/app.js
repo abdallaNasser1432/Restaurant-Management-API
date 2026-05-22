@@ -3,6 +3,7 @@ const notFound = require('./middlewares/notFound.middleware');
 const errorHandler = require('./middlewares/error.middleware');
 
 const restaurantRoutes = require('./modules/restaurants/restaurant.routes');
+const userRoutes = require('./modules/users/user.routes');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.get('/', (req, res) => {
 
 // API Routes
 app.use('/api/restaurants', restaurantRoutes);
+app.use('/api/users', userRoutes);
 
 
 app.use(notFound);
