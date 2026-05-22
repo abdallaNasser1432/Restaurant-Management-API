@@ -13,6 +13,32 @@ const createRestaurant = asyncHandler(async (req, res) => {
   );
 });
 
+const getRestaurants = asyncHandler(async (req, res) => {
+  const restaurants = await restaurantService.getRestaurants(req.query);
+
+  return sendSuccess(
+    res,
+    200,
+    'Restaurants fetched successfully',
+    restaurants
+  );
+});
+
+const getRestaurantByIdentifier = asyncHandler(async (req, res) => {
+  const restaurant = await restaurantService.getRestaurantByIdentifier(
+    req.params.identifier
+  );
+
+  return sendSuccess(
+    res,
+    200,
+    'Restaurant fetched successfully',
+    restaurant
+  );
+});
+
 module.exports = {
   createRestaurant,
+  getRestaurants,
+  getRestaurantByIdentifier,
 };

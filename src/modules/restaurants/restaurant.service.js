@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Restaurant = require('./restaurant.model');
 const ApiError = require('../../utils/ApiError');
 
@@ -27,6 +28,39 @@ const createRestaurant = async (restaurantData) => {
   return Restaurant.create(normalizedData);
 };
 
+const getRestaurants = async (filters) => {
+  const query = {};
+
+  if (filters.cuisine) {
+    query.cuisines = {
+      $regex: `^${filters.cuisine}$`,
+      $options: 'i',
+    };
+  }
+
+  return Restaurant.find(query).sort({ createdAt: -1 });
+};
+
+const getRestaurantByIdentifier = async (identifier) => {
+  let restaurant;
+
+  if (mongoose.Types.ObjectId.isValid(identifier)) {
+    restaurant = await Restaurant.findById(identifier);
+  } else {
+    restaurant = await Restaurant.findOne({
+      slug: identifier.toLowerCase(),
+    });
+  }
+
+  if (!restaurant) {
+    throw new ApiError(404, 'Restaurant not found');
+  }
+
+  return restaurant;
+};
+
 module.exports = {
   createRestaurant,
+  getRestaurants,
+  getRestaurantByIdentifier,
 };

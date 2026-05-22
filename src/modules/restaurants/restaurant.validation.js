@@ -1,6 +1,5 @@
-const { body, validationResult } = require('express-validator');
+const { body, query, param, validationResult } = require('express-validator');
 const ApiError = require('../../utils/ApiError');
-
 
 const validateRequest = (req, res, next) => {
   const errors = validationResult(req);
@@ -71,7 +70,28 @@ const createRestaurantValidation = [
     .withMessage('Latitude must be between -90 and 90'),
 ];
 
+const getRestaurantsValidation = [
+  query('cuisine')
+    .optional()
+    .isString()
+    .withMessage('Cuisine filter must be a string')
+    .trim()
+    .notEmpty()
+    .withMessage('Cuisine filter cannot be empty'),
+];
+
+const getRestaurantByIdentifierValidation = [
+  param('identifier')
+    .notEmpty()
+    .withMessage('Restaurant identifier is required')
+    .isString()
+    .withMessage('Restaurant identifier must be a string')
+    .trim(),
+];
+
 module.exports = {
   validateRequest,
   createRestaurantValidation,
+  getRestaurantsValidation,
+  getRestaurantByIdentifierValidation,
 };
