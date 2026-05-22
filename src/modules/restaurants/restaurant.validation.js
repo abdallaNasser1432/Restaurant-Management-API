@@ -1,20 +1,5 @@
-const { body, query, param, validationResult } = require('express-validator');
-const ApiError = require('../../utils/ApiError');
+const { body, query, param } = require('express-validator');
 
-const validateRequest = (req, res, next) => {
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    const formattedErrors = errors.array().map((error) => ({
-      field: error.path,
-      message: error.msg,
-    }));
-
-    return next(new ApiError(400, 'Validation failed', formattedErrors));
-  }
-
-  next();
-};
 
 const createRestaurantValidation = [
   body('name.ar')
@@ -104,7 +89,6 @@ const getNearbyRestaurantsValidation = [
 ];
 
 module.exports = {
-  validateRequest,
   createRestaurantValidation,
   getRestaurantsValidation,
   getRestaurantByIdentifierValidation,

@@ -1,12 +1,12 @@
 const express = require('express');
 const restaurantController = require('./restaurant.controller');
 const {
-  validateRequest,
   createRestaurantValidation,
   getRestaurantsValidation,
   getRestaurantByIdentifierValidation,
   getNearbyRestaurantsValidation,
 } = require('./restaurant.validation');
+const validateRequest = require('../../middlewares/validateRequest.middleware');
 
 const router = express.Router();
 
