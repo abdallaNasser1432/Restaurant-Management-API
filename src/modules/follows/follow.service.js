@@ -54,7 +54,34 @@ const getUserFollowedRestaurants = async (userId) => {
   return restaurants;
 };
 
+const getRestaurantFollowers = async (identifier) => {
+  let restaurant;
+
+  if (mongoose.Types.ObjectId.isValid(identifier)) {
+    restaurant = await Restaurant.findById(identifier);
+  } else {
+    restaurant = await Restaurant.findOne({
+      slug: identifier.toLowerCase().trim(),
+    });
+  }
+
+  if (!restaurant) {
+    throw new ApiError(404, 'Restaurant not found');
+  }
+
+  const follows = await Follow.find({
+    restaurant: restaurant._id,
+  })
+    .populate('user', 'fullName favoriteCuisines')
+    .sort({ createdAt: -1 });
+
+  const users = follows.map((follow) => follow.user);
+
+  return users;
+};
+
 module.exports = {
   followRestaurant,
   getUserFollowedRestaurants,
+  getRestaurantFollowers,
 };

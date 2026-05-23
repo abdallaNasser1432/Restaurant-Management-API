@@ -1,6 +1,7 @@
 const {
   followRestaurant,
   getUserFollowedRestaurants,
+  getRestaurantFollowers,
 } = require('./follow.service');
 const asyncHandler = require('../../utils/asyncHandler');
 const { sendSuccess } = require('../../utils/response');
@@ -26,7 +27,19 @@ const getUserFollowedRestaurantsController = asyncHandler(
   }
 );
 
+const getRestaurantFollowersController = asyncHandler(async (req, res) => {
+  const users = await getRestaurantFollowers(req.params.identifier);
+
+  sendSuccess(
+    res,
+    200,
+    'Restaurant followers fetched successfully',
+    users
+  );
+});
+
 module.exports = {
   followRestaurantController,
   getUserFollowedRestaurantsController,
+  getRestaurantFollowersController,
 };

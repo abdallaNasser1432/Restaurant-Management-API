@@ -3,11 +3,13 @@ const express = require('express');
 const {
   followRestaurantController,
   getUserFollowedRestaurantsController,
+  getRestaurantFollowersController,
 } = require('./follow.controller');
 
 const {
   followRestaurantValidation,
   getUserFollowedRestaurantsValidation,
+  getRestaurantFollowersValidation,
 } = require('./follow.validation');
 
 const validateRequest = require('../../middlewares/validateRequest.middleware');
@@ -26,6 +28,13 @@ router.get(
   getUserFollowedRestaurantsValidation,
   validateRequest,
   getUserFollowedRestaurantsController
+);
+
+router.get(
+  '/restaurants/:identifier/users',
+  getRestaurantFollowersValidation,
+  validateRequest,
+  getRestaurantFollowersController
 );
 
 module.exports = router;
