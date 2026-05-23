@@ -49,8 +49,8 @@ tests/
 ### Prerequisites
 
 - Node.js 20+ and npm
-- MongoDB 7+ (for local run)
-- Docker Desktop + Docker Compose (for containerized run)
+- MongoDB 
+- Docker Desktop 
 
 ### Option A) Run with Docker
 
@@ -237,7 +237,7 @@ Content-Type: application/json
 
 {
   "name": {
-    "ar": "كناكي",
+    "ar": "كنتاكي",
     "en": "KFC"
   },
   "slug": "kfc",
