@@ -237,7 +237,7 @@ Content-Type: application/json
 
 {
   "name": {
-    "ar": "KFC",
+    "ar": ";",
     "en": "KFC"
   },
   "slug": "kfc",
