@@ -2,6 +2,7 @@ const Follow = require('./follow.model');
 const User = require('../users/user.model');
 const Restaurant = require('../restaurants/restaurant.model');
 const ApiError = require('../../utils/ApiError');
+const mongoose = require('mongoose');
 
 const followRestaurant = async ({ userId, restaurantId }) => {
   const user = await User.findById(userId);
@@ -35,6 +36,27 @@ const followRestaurant = async ({ userId, restaurantId }) => {
     .populate('restaurant', 'name slug cuisines');
 };
 
+const getUserFollowedRestaurants = async (userId) => {
+  const userExists = await mongoose
+    .model('User')
+    .exists({ _id: userId });
+
+  if (!userExists) {
+    throw new ApiError(404, 'User not found');
+  }
+
+  const follows = await Follow.find({
+    user: userId,
+  })
+    .populate('restaurant', 'name slug cuisines location')
+    .sort({ createdAt: -1 });
+
+  const restaurants = follows.map((follow) => follow.restaurant);
+
+  return restaurants;
+};
+
 module.exports = {
   followRestaurant,
+  getUserFollowedRestaurants,
 };
