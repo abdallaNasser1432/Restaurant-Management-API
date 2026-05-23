@@ -37,9 +37,7 @@ const followRestaurant = async ({ userId, restaurantId }) => {
 };
 
 const getUserFollowedRestaurants = async (userId) => {
-  const userExists = await mongoose
-    .model('User')
-    .exists({ _id: userId });
+  const userExists = await User.exists({ _id: userId });
 
   if (!userExists) {
     throw new ApiError(404, 'User not found');
